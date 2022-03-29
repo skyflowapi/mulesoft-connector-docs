@@ -81,3 +81,20 @@ Maven is backing the application, this XML snippet must be included in your pom.
         <version>1.0.0</version>
         <classifier>mule-plugin</classifier>
     </dependency>
+
+
+#Release notes
+## 1.0.0
+### March 28, 2022
+Release Notes for version V1.0.0 of the Mule 4 - Skyflow Connector.
+##Version 1.0.0 - Compatibility
+The Skyflow connector is compatible with:
+
+|Application/Service|Version|
+|-------------------|-------|
+|Mule Runtime|4.3.0|
+|Magento Rest API |2.X.X|
+
+## Version 1.0.0 - Features
+ - Added support for four operations: Tokenize, Bulk Tokenize, Detokenize, and Bulk Detokenize.
+ - Added support for authenticating to Skyflow using service account credentials.
