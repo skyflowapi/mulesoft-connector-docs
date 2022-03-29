@@ -83,7 +83,8 @@ Maven is backing the application, this XML snippet must be included in your pom.
     </dependency>
 
 
-#Release notes
+# Release notes
+
 ## 1.0.0
 ### March 28, 2022
 Release Notes for version V1.0.0 of the Mule 4 - Skyflow Connector.
