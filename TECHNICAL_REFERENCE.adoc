@@ -1,0 +1,431 @@
+= Skyflow connector Module Connector Reference
+
+
+Core class of the connector. Here all the connector general constrain and usages are defined.
+
+
+
+== Configurations
+---
+[[Config]]
+=== Config
+
+
+Default configuration
+
+
+==== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+|Name | String | The name for this configuration. Connectors reference the configuration with this name. | | *x*{nbsp}
+| Connection a| * <<Config_CredentialsFile, Credentials File>> {nbsp}
+* <<Config_Jwt, JWT connection>> {nbsp}
+ | The connection types that can be provided to this configuration. | | *x*{nbsp}
+| Name a| String |  The identifier of this element used to reference it in other components |  | *x*{nbsp}
+| Expiration Policy a| <<ExpirationPolicy>> |  Configures the minimum amount of time that a dynamic configuration instance can remain idle before the runtime considers it eligible for expiration. This does not mean that the platform will expire the instance at the exact moment that it becomes eligible. The runtime will actually purge the instances when it sees it fit. |  | {nbsp}
+|===
+
+==== Connection Types
+[[Config_CredentialsFile]]
+===== Credentials File
+
+
+====== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Base URL a| String |  Base URL where the Skyflow instance lies. |  | *x*{nbsp}
+| Response Buffer Size a| <<BufferSize>> |  Defines the size of the buffer in bytes used to store the HTTP response. |  | {nbsp}
+| Proxy Config a| <<ProxyConfig>> |  |  | {nbsp}
+| Credentials file path a| String |  Path to the credentials.json file required to authenticate the service account. |  | *x*{nbsp}
+| Token Expiration Time a| <<TokenExpirationTime>> |  Expiration time of the bearer token. Default value is 30 minutes. |  | {nbsp}
+| Response Timeout a| <<Timeout>> |  |  | {nbsp}
+| Client Timeout a| <<Timeout>> |  This sets the SO_TIMEOUT value on client sockets. |  | {nbsp}
+| Connection Timeout a| <<Timeout>> |  Time to wait until an outbound connection to a remote server is successfully created. |  | {nbsp}
+| Connection Idle Timeout a| <<Timeout>> |  Defines the amount of time that a connection can remain idle before being closed. |  | {nbsp}
+| Reconnection a| <<Reconnection>> |  When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment will fail if the test doesn't pass after exhausting the associated reconnection strategy |  | {nbsp}
+|===
+[[Config_Jwt]]
+===== JWT connection
+
+
+====== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Base URL a| String |  Base URL where the Skyflow instance lies. |  | *x*{nbsp}
+| Response Buffer Size a| <<BufferSize>> |  Defines the size of the buffer in bytes used to store the HTTP response. |  | {nbsp}
+| Proxy Config a| <<ProxyConfig>> |  |  | {nbsp}
+| Client Id a| String |  The ID of the client required to authenticate the service account. |  | *x*{nbsp}
+| Api Key a| String |  The API key required to authenticate the service account. |  | *x*{nbsp}
+| Private Key a| String |  The private key used to encrypt the JWT authentication request. |  | *x*{nbsp}
+| Token Expiration Time a| <<TokenExpirationTime>> |  Expiration time of the bearer token. Default value is 30 minutes. |  | {nbsp}
+| Response Timeout a| <<Timeout>> |  |  | {nbsp}
+| Client Timeout a| <<Timeout>> |  This sets the SO_TIMEOUT value on client sockets. |  | {nbsp}
+| Connection Timeout a| <<Timeout>> |  Time to wait until an outbound connection to a remote server is successfully created. |  | {nbsp}
+| Connection Idle Timeout a| <<Timeout>> |  Defines the amount of time that a connection can remain idle before being closed. |  | {nbsp}
+| Reconnection a| <<Reconnection>> |  When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment will fail if the test doesn't pass after exhausting the associated reconnection strategy |  | {nbsp}
+|===
+
+==== Associated Operations
+* <<BulkDetokenize>> {nbsp}
+* <<BulkTokenize>> {nbsp}
+* <<Detokenize>> {nbsp}
+* <<Tokenize>> {nbsp}
+
+
+
+== Operations
+
+[[BulkDetokenize]]
+== Bulk Detokenize
+`<skyflow:bulk-detokenize>`
+
+
+Detokenizes a group of fields identified in a particular integration by invoking the Skyflow Gateway.
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Fields a| Any |  A Map matching bulk root field name with list of fields in a name/value format. |  #[payload] | {nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Connection ID a| String |  The Connection ID. |  | *x*{nbsp}
+| Relative Path a| String |  The path of the operation. |  | *x*{nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Any
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* SKYFLOW:CONNECTIVITY {nbsp}
+* SKYFLOW:INVALID_CONNECTION_ID {nbsp}
+* SKYFLOW:INVALID_FIELDS {nbsp}
+* SKYFLOW:INVALID_RELATIVE_PATH {nbsp}
+* SKYFLOW:NOT_FOUND {nbsp}
+* SKYFLOW:RETRY_EXHAUSTED {nbsp}
+* SKYFLOW:TIMEOUT {nbsp}
+* SKYFLOW:TRANSFORMATION {nbsp}
+
+
+[[BulkTokenize]]
+== Bulk Tokenize
+`<skyflow:bulk-tokenize>`
+
+
+Tokenizes a group of fields identified in a particular integration by invoking the Skyflow Gateway.
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Fields a| Any |  A Map matching bulk root field name with list of fields in a name/value format. |  #[payload] | {nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Connection ID a| String |  The Connection ID. |  | *x*{nbsp}
+| Relative Path a| String |  The path of the operation. |  | *x*{nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Any
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* SKYFLOW:CONNECTIVITY {nbsp}
+* SKYFLOW:INVALID_CONNECTION_ID {nbsp}
+* SKYFLOW:INVALID_FIELDS {nbsp}
+* SKYFLOW:INVALID_RELATIVE_PATH {nbsp}
+* SKYFLOW:NOT_FOUND {nbsp}
+* SKYFLOW:RETRY_EXHAUSTED {nbsp}
+* SKYFLOW:TIMEOUT {nbsp}
+* SKYFLOW:TRANSFORMATION {nbsp}
+
+
+[[Detokenize]]
+== Detokenize
+`<skyflow:detokenize>`
+
+
+Detokenizes a group of fields identified in a particular integration by invoking the Skyflow Gateway.
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Fields a| Any |  A Map of fields with its values. |  #[payload] | {nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Connection ID a| String |  The Connection ID. |  | *x*{nbsp}
+| Relative Path a| String |  The path of the operation. |  | *x*{nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Any
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* SKYFLOW:CONNECTIVITY {nbsp}
+* SKYFLOW:INVALID_CONNECTION_ID {nbsp}
+* SKYFLOW:INVALID_FIELDS {nbsp}
+* SKYFLOW:INVALID_RELATIVE_PATH {nbsp}
+* SKYFLOW:NOT_FOUND {nbsp}
+* SKYFLOW:RETRY_EXHAUSTED {nbsp}
+* SKYFLOW:TIMEOUT {nbsp}
+* SKYFLOW:TRANSFORMATION {nbsp}
+
+
+[[Tokenize]]
+== Tokenize
+`<skyflow:tokenize>`
+
+
+Tokenizes a group of fields identified in a particular integration by invoking the Skyflow Gateway.
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Fields a| Any |  A Map of fields with its values. |  #[payload] | {nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Connection ID a| String |  The Connection ID. |  | *x*{nbsp}
+| Relative Path a| String |  The path of the operation. |  | *x*{nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Any
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* SKYFLOW:CONNECTIVITY {nbsp}
+* SKYFLOW:INVALID_CONNECTION_ID {nbsp}
+* SKYFLOW:INVALID_FIELDS {nbsp}
+* SKYFLOW:INVALID_RELATIVE_PATH {nbsp}
+* SKYFLOW:NOT_FOUND {nbsp}
+* SKYFLOW:RETRY_EXHAUSTED {nbsp}
+* SKYFLOW:TIMEOUT {nbsp}
+* SKYFLOW:TRANSFORMATION {nbsp}
+
+
+
+== Types
+[[BufferSize]]
+=== Buffer Size
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Size a| Number | Amount of DataUnits that compose this buffer. | 10 | 
+| Data Unit a| Enumeration, one of:
+
+** BYTE
+** KB
+** MB
+** GB | Data unit of the buffer. | KB | 
+|======================
+
+[[ProxyConfig]]
+=== Proxy Config
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Host a| String | The host of the proxy. |  | x
+| Port a| Number | The port of the proxy. |  | 
+| Non Proxy Hosts a| Array of String | HTTP proxy configuration for making HTTP requests through an NTLM authenticated proxy. |  | 
+| Password a| String | Password of the HTTP proxy. |  | 
+| Username a| String | Username of the HTTP proxy. |  | 
+|======================
+
+[[TokenExpirationTime]]
+=== Token Expiration Time
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Amount a| Number | Amount of TimeUnits that compose this duration. | 30 | 
+| Time Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS | Time unit of the duration. | MINUTES | 
+|======================
+
+[[Timeout]]
+=== Timeout
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Amount a| Number | Amount of TimeUnits that compose this duration. | 30 | 
+| Time Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS | Time unit of the duration. | SECONDS | 
+|======================
+
+[[Reconnection]]
+=== Reconnection
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Fails Deployment a| Boolean | When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment will fail if the test doesn't pass after exhausting the associated reconnection strategy |  | 
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> | The reconnection strategy to use |  | 
+|======================
+
+[[Reconnect]]
+=== Reconnect
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Frequency a| Number | How often (in ms) to reconnect |  | 
+| Blocking a| Boolean | If false, the reconnection strategy will run in a separate, non-blocking thread |  | 
+| Count a| Number | How many reconnection attempts to make |  | 
+|======================
+
+[[ReconnectForever]]
+=== Reconnect Forever
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Frequency a| Number | How often (in ms) to reconnect |  | 
+| Blocking a| Boolean | If false, the reconnection strategy will run in a separate, non-blocking thread |  | 
+|======================
+
+[[ExpirationPolicy]]
+=== Expiration Policy
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Max Idle Time a| Number | A scalar time value for the maximum amount of time a dynamic configuration instance should be allowed to be idle before it's considered eligible for expiration |  | 
+| Time Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS | A time unit that qualifies the maxIdleTime attribute |  | 
+|======================
+
+[[RepeatableInMemoryStream]]
+=== Repeatable In Memory Stream
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Initial Buffer Size a| Number | This is the amount of memory that will be allocated in order to consume the stream and provide random access to it. If the stream contains more data than can be fit into this buffer, then it will be expanded by according to the bufferSizeIncrement attribute, with an upper limit of maxInMemorySize. |  | 
+| Buffer Size Increment a| Number | This is by how much will be buffer size by expanded if it exceeds its initial size. Setting a value of zero or lower will mean that the buffer should not expand, meaning that a STREAM_MAXIMUM_SIZE_EXCEEDED error will be raised when the buffer gets full. |  | 
+| Max Buffer Size a| Number | This is the maximum amount of memory that will be used. If more than that is used then a STREAM_MAXIMUM_SIZE_EXCEEDED error will be raised. A value lower or equal to zero means no limit. |  | 
+| Buffer Unit a| Enumeration, one of:
+
+** BYTE
+** KB
+** MB
+** GB | The unit in which all these attributes are expressed |  | 
+|======================
+
+[[RepeatableFileStoreStream]]
+=== Repeatable File Store Stream
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| In Memory Size a| Number | Defines the maximum memory that the stream should use to keep data in memory. If more than that is consumed then it will start to buffer the content on disk. |  | 
+| Buffer Unit a| Enumeration, one of:
+
+** BYTE
+** KB
+** MB
+** GB | The unit in which maxInMemorySize is expressed |  | 
+|======================
+
