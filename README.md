@@ -104,3 +104,37 @@ The Skyflow connector is compatible with:
 ## Version 1.0.0 - Features
  - Added support for four operations: Tokenize, Bulk Tokenize, Detokenize, and Bulk Detokenize.
  - Added support for authenticating to Skyflow using service account credentials.
+
+
+## 1.1.0
+### January 10, 2024
+We are excited to announce the latest enhancements to the Mule Skyflow Connector, which are focused on simplifying integration and improving compatibility.
+##Version 1.1.0 - Compatibility
+The Skyflow connector is compatible with:
+
+|Application/Service|Version|
+|-------------------|-------|
+|Mule Runtime|4.6.0|
+|Magento Rest API |2.X.X|
+
+## What's New
+
+### Support for Sandbox Environment
+
+Seamlessly test and validate your integrations with the new Sandbox environment support.
+Enable iterative development without impacting production data.
+
+### Compatibility with Mule Runtime 4.6
+
+The connector is fully compatible with Mule Runtime 4.6, ensuring smoother integration with the latest MuleSoft environment.
+
+### Streamlined Operations
+
+We’ve streamlined the connector to the two most essential operations:
+- Tokenize: Easily tokenize sensitive data to ensure secure handling.
+- Detokenize: Retrieve original data securely when needed.
+
+### Connection parameter changes
+
+- API Key is renamed to Key ID.
+- Added Token URI 

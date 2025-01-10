@@ -61,7 +61,8 @@ Default configuration
 | Response Buffer Size a| <<BufferSize>> |  Defines the size of the buffer in bytes used to store the HTTP response. |  | {nbsp}
 | Proxy Config a| <<ProxyConfig>> |  |  | {nbsp}
 | Client Id a| String |  The ID of the client required to authenticate the service account. |  | *x*{nbsp}
-| Api Key a| String |  The API key required to authenticate the service account. |  | *x*{nbsp}
+| Key ID a| String |  The key ID required to authenticate the service account. |  | *x*{nbsp}
+| Token URI a| String |  The Token URI | https://manage.skyflowapis.com/v1/auth/sa/oauth/token | *x*{nbsp}
 | Private Key a| String |  The private key used to encrypt the JWT authentication request. |  | *x*{nbsp}
 | Token Expiration Time a| <<TokenExpirationTime>> |  Expiration time of the bearer token. Default value is 30 minutes. |  | {nbsp}
 | Response Timeout a| <<Timeout>> |  |  | {nbsp}
@@ -72,114 +73,10 @@ Default configuration
 |===
 
 ==== Associated Operations
-* <<BulkDetokenize>> {nbsp}
-* <<BulkTokenize>> {nbsp}
 * <<Detokenize>> {nbsp}
 * <<Tokenize>> {nbsp}
 
-
-
 == Operations
-
-[[BulkDetokenize]]
-== Bulk Detokenize
-`<skyflow:bulk-detokenize>`
-
-
-Detokenizes a group of fields identified in a particular integration by invoking the Skyflow Gateway.
-
-
-=== Parameters
-
-[%header%autowidth.spread]
-|===
-| Name | Type | Description | Default Value | Required
-| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
-| Fields a| Any |  A Map matching bulk root field name with list of fields in a name/value format. |  #[payload] | {nbsp}
-| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
-| Streaming Strategy a| * <<RepeatableInMemoryStream>>
-* <<RepeatableFileStoreStream>>
-* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
-| Connection ID a| String |  The Connection ID. |  | *x*{nbsp}
-| Relative Path a| String |  The path of the operation. |  | *x*{nbsp}
-| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
-| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
-| Reconnection Strategy a| * <<Reconnect>>
-* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
-|===
-
-=== Output
-
-[%autowidth.spread]
-|===
-| *Type* a| Any
-|===
-
-=== For Configurations
-
-* <<Config>> {nbsp}
-
-=== Throws
-
-* SKYFLOW:CONNECTIVITY {nbsp}
-* SKYFLOW:INVALID_CONNECTION_ID {nbsp}
-* SKYFLOW:INVALID_FIELDS {nbsp}
-* SKYFLOW:INVALID_RELATIVE_PATH {nbsp}
-* SKYFLOW:NOT_FOUND {nbsp}
-* SKYFLOW:RETRY_EXHAUSTED {nbsp}
-* SKYFLOW:TIMEOUT {nbsp}
-* SKYFLOW:TRANSFORMATION {nbsp}
-
-
-[[BulkTokenize]]
-== Bulk Tokenize
-`<skyflow:bulk-tokenize>`
-
-
-Tokenizes a group of fields identified in a particular integration by invoking the Skyflow Gateway.
-
-
-=== Parameters
-
-[%header%autowidth.spread]
-|===
-| Name | Type | Description | Default Value | Required
-| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
-| Fields a| Any |  A Map matching bulk root field name with list of fields in a name/value format. |  #[payload] | {nbsp}
-| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
-| Streaming Strategy a| * <<RepeatableInMemoryStream>>
-* <<RepeatableFileStoreStream>>
-* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
-| Connection ID a| String |  The Connection ID. |  | *x*{nbsp}
-| Relative Path a| String |  The path of the operation. |  | *x*{nbsp}
-| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
-| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
-| Reconnection Strategy a| * <<Reconnect>>
-* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
-|===
-
-=== Output
-
-[%autowidth.spread]
-|===
-| *Type* a| Any
-|===
-
-=== For Configurations
-
-* <<Config>> {nbsp}
-
-=== Throws
-
-* SKYFLOW:CONNECTIVITY {nbsp}
-* SKYFLOW:INVALID_CONNECTION_ID {nbsp}
-* SKYFLOW:INVALID_FIELDS {nbsp}
-* SKYFLOW:INVALID_RELATIVE_PATH {nbsp}
-* SKYFLOW:NOT_FOUND {nbsp}
-* SKYFLOW:RETRY_EXHAUSTED {nbsp}
-* SKYFLOW:TIMEOUT {nbsp}
-* SKYFLOW:TRANSFORMATION {nbsp}
-
 
 [[Detokenize]]
 == Detokenize
