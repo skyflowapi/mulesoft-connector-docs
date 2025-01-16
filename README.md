@@ -107,7 +107,7 @@ The Skyflow connector is compatible with:
 
 
 ## 1.1.0
-### January 10, 2024
+### January 10, 2025
 We are excited to announce the latest enhancements to the Mule Skyflow Connector, which are focused on simplifying integration and improving compatibility.
 ##Version 1.1.0 - Compatibility
 The Skyflow connector is compatible with:
